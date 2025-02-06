@@ -1,6 +1,6 @@
 <div class="nav-tabs">
-  <a [routerLink]="['/dashboard', 1]" [ngClass]="{'active': activeTab === '1'}">Dash 1</a>
-  <a [routerLink]="['/dashboard', 2]" [ngClass]="{'active': activeTab === '2'}">Dash 2</a>
+  <a [routerLink]="[basePath, 'dashboard', 1]"  [ngClass]="{'active': activeTab === '1'}">Dash 1</a>
+  <a [routerLink]="[basePath, 'dashboard', 2]"  [ngClass]="{'active': activeTab === '2'}">Dash 2</a>
 </div>
 
 <iframe *ngIf="activeTab === '1'" class="iframe-container" src="https://www.example.com"></iframe>
