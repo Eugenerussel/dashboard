@@ -2,7 +2,7 @@ const { shareAll, withModuleFederationPlugin } = require('@angular-architects/mo
 
 module.exports = withModuleFederationPlugin({
 
-  name: 'business-ops',
+  name: 'businessOperation',
 
   exposes: {
     './routes': './src/app/app.routes.ts',

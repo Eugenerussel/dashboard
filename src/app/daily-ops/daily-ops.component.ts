@@ -20,7 +20,9 @@ export class DailyOpsComponent {
       this.activeTab = params['id'] || '1';  // Get the active tab id from the route (1 or 2)
     });
      // Detect if running inside host app (host uses "/business-ops/")
-     this.basePath = this.router.url.includes('business-ops') ? '/business-ops' : '';
+     this.basePath = this.router.url.includes('businessOperation/dailyOperation') 
+     ? '/businessOperation/dailyOperation' 
+     : '';
   
   }
 }
