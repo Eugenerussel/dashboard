@@ -1,28 +1,40 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-daily-ops',
-  imports: [CommonModule,RouterLink],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './daily-ops.component.html',
-  styleUrl: './daily-ops.component.css'
+  styleUrls: ['./daily-ops.component.css']
 })
-export class DailyOpsComponent {
-  activeTab: string='1';  // To keep track of the active tab
-  basePath: string = '';
+export class DailyOpsComponent{
+  activeTab: string = '1';  
+  dashboardUrl: SafeResourceUrl | null = null; 
 
-  constructor(private route: ActivatedRoute,private router:Router) {}
+  constructor(
+    private sanitizer: DomSanitizer,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
-  ngOnInit() {
-    // Subscribe to route parameter changes to switch the active tab
-    this.route.params.subscribe(params => {
-      this.activeTab = params['id'] || '1';  // Get the active tab id from the route (1 or 2)
-    });
-     // Detect if running inside host app (host uses "/business-ops/")
-     this.basePath = this.router.url.includes('businessOperation/dailyOperation') 
-     ? '/businessOperation/dailyOperation' 
-     : '';
-  
+
+  setActiveTab(tab: string) {
+    if (this.activeTab !== tab) {
+      this.router.navigate(['/dashboard', tab]); 
+      this.activeTab = tab;
+      this.updateDashboardUrl();
+    }
+  }
+
+  updateDashboardUrl() {
+    const urls: { [key: string]: string } = {
+      '1': 'https://www.wikipedia.org',
+      '2': 'https://www.angular.io'
+    };
+
+    this.dashboardUrl = this.sanitizer.bypassSecurityTrustResourceUrl(urls[this.activeTab] || urls['1']);
   }
 }
