@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { DailyOpsComponent } from './daily-ops/daily-ops.component';
 import {loadRemoteModule} from '@angular-architects/module-federation'
 import { AuthGuard } from './guard/auth-guard';
+import { RedirectComponent } from './guard/RedirectComponent';
 
 export const routes: Routes = [
   {
@@ -15,15 +16,9 @@ export const routes: Routes = [
     canActivate:[AuthGuard]
   },
   {
-    path:'login',
-    loadChildren: () => loadRemoteModule({
-        //remoteEntry: 'https://your-s3-bucket-name.s3.amazonaws.com/remoteEntry.js',
-        remoteEntry: 'http://localhost:8080/remoteEntry.js',
-        type: 'module',
-        exposedModule: './routes'
-    }).then(m => m.routes)
-    .catch(err => console.log(err))
-},
+    path: 'home',
+    component: RedirectComponent  // Triggers browser redirect
+  },
   {
     path:'claims',
     loadChildren: () => loadRemoteModule({
