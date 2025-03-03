@@ -31,7 +31,7 @@ export class DailyOpsComponent{
 
   updateDashboardUrl() {
     const urls: { [key: string]: string } = {
-      '1': 'https://www.wikipedia.org',
+      '1': 'https://dev.usthealthproofconnect.com/qliksense/single/?appid=4ee0d04a-525d-403b-9c3b-1f40d4fd5f0a&sheet=300f914f-8756-458d-9c37-b1c654ec45a0&theme=horizon&opt=ctxmenu,currsel%22',
       '2': 'https://dev.usthealthproofconnect.com/qliksense/single/?appid=4ee0d04a-525d-403b-9c3b-1f40d4fd5f0a&sheet=300f914f-8756-458d-9c37-b1c654ec45a0&theme=horizon&opt=ctxmenu,currsel%22'
     };
 

@@ -9,6 +9,7 @@ module.exports = withModuleFederationPlugin({
   },
 
   remotes:{
+    'host-app': "http://localhost:8080/remoteEntry.js",
     'call-center': "http://localhost:4204/remoteEntry.js",
     'Enrollment': "http://localhost:4203/remoteEntry.js",
     'claims': "http://localhost:4202/remoteEntry.js"
