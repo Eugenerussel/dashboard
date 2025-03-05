@@ -13,10 +13,10 @@ export const routes: Routes = [
   {
     path: 'dailyOperation/dashboard',
     component: DailyOpsComponent,
-    canActivate:[AuthGuard]
+    // canActivate:[AuthGuard]
   },
   {
-    path: 'home',
+    path: 'login',
     component: RedirectComponent  // Triggers browser redirect
   },
   {

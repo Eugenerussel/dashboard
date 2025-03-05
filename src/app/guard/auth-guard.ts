@@ -30,20 +30,20 @@ export class AuthGuard implements CanActivate {
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     if (!this.authService) {
       console.log("AuthService is not yet loaded, denying access.");
-      this.router.navigate(['/home']);
+      this.router.navigate(['/login']);
       return false;
     }
 
     try {
         const isAuthenticated = await this.authService.isAuthenticated();
         if (!isAuthenticated) {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/login']);
           return false;
         }
         return true;
       } catch (err) {
         console.error("Authentication check failed:", err);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/login']);
         return false;
       }
   }
