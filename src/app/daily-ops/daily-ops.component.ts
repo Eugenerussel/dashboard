@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpService } from '../service/http.service';
 
 @Component({
   selector: 'app-daily-ops',
@@ -13,28 +14,35 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class DailyOpsComponent{
   activeTab: string = '1';  
   dashboardUrl: SafeResourceUrl | null = null; 
+  qlikUrl: string = '';
 
   constructor(
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
-    private router: Router
+    private httpService: HttpService
   ) {}
-
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.activeTab = params['tab'] || '1'; 
+      this.updateDashboardUrl();
+    });
+  }
 
   setActiveTab(tab: string) {
     if (this.activeTab !== tab) {
-      this.router.navigate(['/dashboard', tab]); 
       this.activeTab = tab;
       this.updateDashboardUrl();
     }
   }
 
   updateDashboardUrl() {
+    this.httpService.getQlikSenseUrl().subscribe((response: any) => {
+      this.qlikUrl = response.url;
+    });
     const urls: { [key: string]: string } = {
-      '1': 'https://dev.usthealthproofconnect.com/qliksense/single/?appid=4ee0d04a-525d-403b-9c3b-1f40d4fd5f0a&sheet=300f914f-8756-458d-9c37-b1c654ec45a0&theme=horizon&opt=ctxmenu,currsel%22',
-      '2': 'https://dev.usthealthproofconnect.com/qliksense/single/?appid=4ee0d04a-525d-403b-9c3b-1f40d4fd5f0a&sheet=300f914f-8756-458d-9c37-b1c654ec45a0&theme=horizon&opt=ctxmenu,currsel%22'
+  '1': this.qlikUrl,
+  '2': this.qlikUrl,
     };
-
     this.dashboardUrl = this.sanitizer.bypassSecurityTrustResourceUrl(urls[this.activeTab] || urls['1']);
   }
 }
